@@ -10,5 +10,17 @@
     "mongoose": "^8.19.2",
     "nodemon": "^3.1.10",
     "xlsx": "^0.18.5"
-  }
+  },
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "Server.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

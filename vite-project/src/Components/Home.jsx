@@ -14,7 +14,6 @@ function Home() {
                     <li onClick={() => { navigate("/") }}>Home </li>
                     <li>Contact Us </li>
                     <li>About </li>
-
                 </ul>
             </nav>
             <div className="WelcomeBox">
@@ -26,9 +25,7 @@ function Home() {
                 <br />
                 <button onClick={() => { navigate("/Normaluser") }}>Normal User</button>
                 <br />
-                <button>Store Owner</button>
             </div>
-
         </>
     )
 }

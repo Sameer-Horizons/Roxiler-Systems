@@ -4,32 +4,33 @@ import axios from 'axios';
 import { AppContext } from "../Context/AppContext.jsx";
 import myimg from '../assets/Screenshot_2025-removebg-preview.png'
 
-function Normaluser() {
+function Login() {
+    const [AdminId, setAdminId] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const { backendurl, setIsLoggedin } = useContext(AppContext)
-    axios.defaults.withCredentials = true
     const handleClick = async (e) => {
-        
         try {
             e.preventDefault();
-            if (email && password) {
-                
-                const { data } = await axios.post(`${backendurl}/loginuser`, { email, password })
+            axios.defaults.withCredentials = true
+            if (AdminId && email && password) {
+                const { data } = await axios.post(backendurl + '/api/auth/Adminregister', { AdminId, email, password })
                 if (data.success) {
                     setIsLoggedin(true)
-                    navigate('/ListofStores')
+                    alert('saved')
                 }
                 else {
-                    alert(data.message)
+                    alert(data.message); 
                 }
+            }else{
+                 alert('details required');
             }
-        } catch (err) {
-            console.log(err)
+        }   
+        catch (err) {
+            alert(err.response?.data?.message || "An error occurred");
         }
     }
-
     return (
         <>
             <nav className="Nav">
@@ -43,28 +44,25 @@ function Normaluser() {
                 </ul>
             </nav>
             <button onClick={() => navigate("/")}>Back</button>
-            <header className="page">Normal Login page</header>
             <br /><br />
-            <div className="form-container1" autoComplete="off">
+            <div className="Authbox">
                 <br />
+                <br />
+                <p className="emaillogo">AdminID</p>
+                <input className="input" type="text" value={AdminId} onChange={(e) => setAdminId(e.target.value)} />
                 <p className="emaillogo">Email</p>
-                <input className="input" type="text"  value={email} 
-                   autoComplete="off"  onChange={(e) => setEmail(e.target.value)} />
+                <input className="input" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <br />
                 <p className="password">Password</p>
-                <input className="input" type="password" value={password} 
-                autoComplete="off"  onChange={(e) => setPassword(e.target.value)} />
+                <input className="input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <br />
+                <li onClick={handleClick}className="login-button1" >Login</li>
             </div>
             <div>
-                <ul >
-                    <li onClick={handleClick} className="login-button" >Login</li>
-                </ul>
-                <p className="P1">New User create Account ? </p>
-                <button onClick={() => navigate("/NUserRegitr")} className="R-button"> Register </button>
             </div>
+
         </>
     )
 }
 
-export default Normaluser;
+export default Login;

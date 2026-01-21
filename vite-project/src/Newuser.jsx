@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Newuser() {
-    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    
     const navigate = useNavigate()
     const { backendurl } = useContext(AppContext)
 
@@ -17,11 +17,11 @@ function Newuser() {
         try {
             e.preventDefault();
             axios.defaults.withCredentials = true;
-            if (name && address && email && password) {
-                const { data } = await axios.post(backendurl + "/api/auth/AddingUser", { name, email, address, password })
+            if (username && address && email && password) {
+                const { data } = await axios.post(backendurl + "/register&adduser", { username, email, address, password })
                 if (data.success) {
                     alert("success");
-                    setName('');
+                    setUsername('');
                     setAddress('');
                     setEmail('');
                     setPassword('');
@@ -37,13 +37,12 @@ function Newuser() {
             console.error("Axios request failed:", error);
         }
     }
-
     return (
         <>
             <button onClick={() => navigate("/SysAdmin")}>Back</button>
             <div className="Adding-Store">
                 <p className="">Enter Username</p>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
                 <br />
                 <p className="">Enter Address</p>
                 <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} />

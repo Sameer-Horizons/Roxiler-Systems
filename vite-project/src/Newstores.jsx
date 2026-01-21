@@ -16,7 +16,7 @@ function Newstores() {
             e.preventDefault();
             axios.defaults.withCredentials = true;
             if (storename && address && email) {
-                const { data } = await axios.post(backendurl + "/api/auth/Addingstore", { storename, address, email, })
+                const { data } = await axios.post(backendurl + "/add-store", {storename, address:parseInt(address), email})
                 if (data.success) {
                     alert("success");
                     setStorename('')
@@ -40,14 +40,14 @@ function Newstores() {
         <>
         <button onClick={() => navigate("/SysAdmin")}>Back</button>
             <div className="form-container2">
-                <p className="">Enter store name </p>
-                <input type="text" value={storename} onChange={(e) => setStorename(e.target.value)} />
+                <p className="" >Enter store name </p>
+                <input value={storename} type="text" onChange={(e) => setStorename(e.target.value)} />
                 <br />
-                <p className="">Enter Address</p>
-                <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} />
+                <p  className="">Enter Address</p>
+                <input  type="number" value={address} onChange={(e) => setAddress(e.target.value)} />
                 <br />
                 <p className="">Enter your Email</p>
-                <input className="inputpass" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="text" className="inputpass"  value={email} onChange={(e) => setEmail(e.target.value)} />
                 <br />
                 <button onClick={handleAdd}> + Add Store </button>
             </div>

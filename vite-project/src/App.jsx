@@ -13,6 +13,7 @@ import StoreDetails from './Components/StoreDetails.jsx';
 import Normaluser from './Components/Normaluser.jsx';
 import NUserRegitr from './Components/NUserRegitr.jsx';
 import ListofStores from './Components/ListofStores.jsx';
+import RegisterAdmin from './Components/RegisterAdmin.jsx'
 function App() {
 
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path='/ListofStores' element={<ListofStores />} />
           <Route path='/Normaluser' element={<Normaluser />} />
           <Route path='/NUserRegitr' element={<NUserRegitr />} />
+          <Route path='/Adminregister' element={<RegisterAdmin />} />
 
         </Routes>
       </div>

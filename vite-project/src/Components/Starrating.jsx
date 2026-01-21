@@ -22,20 +22,23 @@ export default function Starrating({ starCount = 5, productId }) {
             };
             let requestPromise;
             if (savedStarValue > 0) {
-                requestPromise = axios.put(backendurl + "/api/auth/rating", ratingData);
+                requestPromise = axios.post(backendurl + "/rating", ratingData);
             } else {
-                requestPromise = axios.post(backendurl + "/api/auth/rating", ratingData);
+
             }
-            const data = await requestPromise;
+            const data = await requestPromise
+            const response = await requestPromise;
+            setSavedStarValue(pendingStarValue);
+            alert("Rating saved successfully!");
         }
         catch (error) {
 
             console.error("Error saving rating:", error);
             if (error.response) {
                 console.error("Backend Error Message:", error.response.data.message); // <-- This will now show the detailed error
-                alert("Failed to save rating: " + error.response.data.message);
+                alert("Can't change once done " );
             } else {
-                alert("Failed to save rating (Network error).");
+                alert("Failed to save rating .");
             }
         }
     };
@@ -45,7 +48,7 @@ export default function Starrating({ starCount = 5, productId }) {
     };
 
     const displayValue = hovervalue || pendingStarValue || savedStarValue;
-    
+
     return (
         <>
             <div>
@@ -66,7 +69,7 @@ export default function Starrating({ starCount = 5, productId }) {
                 }
             </div>
             <button onClick={saveRatingToDatabase}>
-                {savedStarValue > 0 ? "Modify/Re-submit Rating" : "Submit Rating"}
+                {savedStarValue > 0 ? "done" : "Submit Rating"}
             </button>
             <p>Current pending selection: {pendingStarValue || 'None'}</p>
         </>

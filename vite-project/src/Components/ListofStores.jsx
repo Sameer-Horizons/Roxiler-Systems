@@ -1,15 +1,18 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo,useContext  } from "react";
 import axios from "axios";
 import myimg from '../assets/Screenshot_2025-removebg-preview.png'
 import Starrating from "./Starrating";
+import { AppContext } from "../Context/AppContext";
 
 export default function ListofStores() {
+    
+     const { backendurl, setIsLoggedin } = useContext(AppContext)
     const [stores, setStores] = useState([])
     const [filterQuery, setFilterQuery] = useState('');
     useEffect(() => {
         const fetchStores = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/getstores');
+                const response = await axios.get('http://localhost:8000/get-store');
                 setStores(response.data);
             } catch (err) {
                 console.error("Error fetching data:", err);
@@ -30,9 +33,22 @@ export default function ListofStores() {
             const nameMatch = store.storename.toLowerCase().includes(lowerCaseQuery);
             const addressMatch = String(store.address || '').toLowerCase().includes(lowerCaseQuery);
 
-            return nameMatch ||  addressMatch;
+            return nameMatch || addressMatch;
         });
     }, [stores, filterQuery]);
+    
+    const handleClick = async (e) => {
+         e.preventDefault();
+    try {
+        await axios.post(`${backendurl}/logout`);
+        // 1. Clear local storage/cookies
+        localStorage.removeItem('token'); 
+        // 2. Redirect user
+        window.location.href = '/Normaluser'; 
+    } catch (err) {
+        console.error("Logout failed", err);
+    }
+    }
 
     return (
         <>
@@ -41,9 +57,9 @@ export default function ListofStores() {
                     <img className="logoimg" src={myimg} />
                 </div>
                 <ul className="Navlist">
-                    <li>Home </li>
+                    
                     <li>Contact Us </li>
-                    <li onClick={() => navigate("/")} >Log out</li>
+                    <li onClick={handleClick} >Log out</li>
                 </ul>
             </nav>
             <div className="filter-container">
@@ -56,8 +72,7 @@ export default function ListofStores() {
                 />
             </div>
             <h2>List of stores</h2>
-            
-            
+
             <div className="user-item">
                 {
                     filteredUsers.map(store => (
@@ -69,15 +84,8 @@ export default function ListofStores() {
                         </div>
                     ))
                 }
-                
+
             </div>
         </>
     )
 }
-
-
-
-
-
-
-

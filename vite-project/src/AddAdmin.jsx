@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 function AddingAdmin() {
     const [AdminId, setAdminId] = useState("");
     const [role, setRole] = useState("");
@@ -18,7 +17,7 @@ function AddingAdmin() {
             e.preventDefault();
             axios.defaults.withCredentials = true;
             if (AdminId && role && email && password) {
-                const { data } = await axios.post(backendurl + "/api/auth/AddingAdmin", { AdminId, role, email, password })
+                const { data } = await axios.post(backendurl + "/register-admin", { AdminId, role, email, password })
                 if (data.success) {
                     alert("success");
                     setAdminId('');

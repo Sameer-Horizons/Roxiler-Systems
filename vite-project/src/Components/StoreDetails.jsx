@@ -1,15 +1,29 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo ,useContext} from "react";
 import axios from "axios";
 import myimg from '../assets/Screenshot_2025-removebg-preview.png'
+import { AppContext } from "../Context/AppContext.jsx";
 
 function StoreDetails() {
     const [stores, setStores] = useState([])
+    const { backendurl, setIsLoggedin } = useContext(AppContext)
     const [filterQuery, setFilterQuery] = useState('');
+    const handleClick = async (e) => {
+         e.preventDefault();
+    try {
+        await axios.post(`${backendurl}/logout`);
+        // 1. Clear local storage/cookies
+        localStorage.removeItem('token'); 
+        // 2. Redirect user
+        window.location.href = '/login'; 
+    } catch (err) {
+        console.error("Logout failed", err);
+    }
+    }
 
     useEffect(() => {
         const fetchStores = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/getstores');
+                const response = await axios.get('http://localhost:8000/get-store');
                 setStores(response.data);
             } catch (err) {
                 console.error("Error fetching data:", err);
@@ -43,9 +57,9 @@ function StoreDetails() {
                     <img className="logoimg" src={myimg} />
                 </div>
                 <ul className="Navlist">
-                    <li>Home </li>
+                    
                     <li>Contact Us </li>
-                    <li onClick={() => navigate("/")} >Log out</li>
+                    <li onClick={handleClick}  >Log out</li>
                 </ul>
             </nav>
             <div className="filter-container">

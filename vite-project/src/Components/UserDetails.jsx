@@ -8,7 +8,7 @@ function UserDetails() {
     useEffect(() => {
         const fetchusers = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/getusers');
+                const response = await axios.get('http://localhost:8000/get-users');
                 setUsers(response.data);
             } catch (err) {
                 console.error("Error fetching data:", err);
@@ -26,10 +26,9 @@ function UserDetails() {
         if (!filterQuery) {
             return users;
         }
-
         const lowerCaseQuery = filterQuery.toLowerCase();
         return users.filter(user => {
-            const nameMatch = user.name.toLowerCase().includes(lowerCaseQuery);
+            const nameMatch = user.username.toLowerCase().includes(lowerCaseQuery);
             const emailMatch = user.email.toLowerCase().includes(lowerCaseQuery);
             const addressMatch = String(user.address || '').toLowerCase().includes(lowerCaseQuery);
 
@@ -53,21 +52,16 @@ function UserDetails() {
                 {
                     filteredUsers.map(user => ( 
                         <div key={user._id} className="user-card">
-                            <h3 className="user-card-h3">{user.name}</h3>
+                            <h3 className="user-card-h3">{user.username}</h3>
                             <p className="user-card-p">{user.email}</p>
                             <p>Address : {user.address}</p>
                         </div>
                     ))
                 }
             </div>
-
-
         </>
     )
-
 }
-
-
 export default UserDetails;
 
 

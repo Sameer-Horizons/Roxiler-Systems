@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../Context/AppContext.jsx";
 function NUserRegitr() {
 
-    const [name, setName] = useState("");
+    const [username, setName] = useState("");
     const [address, setaddress] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,8 +15,8 @@ function NUserRegitr() {
         try {
             e.preventDefault();
             axios.defaults.withCredentials = true
-            if (name && email && address && password) {
-                const { data } = await axios.post(backendurl + "/api/auth/AddingUser", { name, email, address, password })
+            if (username && email && address && password) {
+                const { data } = await axios.post(backendurl + "/register&adduser", { username, email, address, password })
                 if (data.success) {
                     setUserData(true)
                     navigate('/Normaluser')
@@ -37,7 +37,7 @@ function NUserRegitr() {
             <div className="Authbox">
                 <h2>Normal Register</h2>
                 <p className="">Name</p>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                <input type="text" value={username} onChange={(e) => setName(e.target.value)} />
                 <br />
                 <p className="">Address</p>
                 <input type="text" value={address} onChange={(e) => setaddress(e.target.value)} />
